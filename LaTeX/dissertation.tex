@@ -1,28 +1,67 @@
 %!TEX TS-program = xelatex
 %!TEX encoding = UTF-8 Unicode
-
-
 \documentclass{Dissertate}
+
+% preamble
+\usepackage{xcolor}
+\usepackage{fltpage2}
+\usepackage[symbol, perpage]{footmisc}
+\usepackage{caption}
+\usepackage{chapterbib}
+\usepackage{textgreek}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{nicefrac}
+\usepackage{chemformula}
+
+% rename to Table of Contents
+\renewcommand{\contentsname}{Table of Contents}
+
+% remove dots from TOC
+\renewcommand{\cftdot}{}
+
+% change section titles to be crimson
+\usepackage{titlesec}
+\titleformat{\section}{\color{SchoolColor}\singlespacing\scshape\Large\bfseries}{\color{SchoolColor}\thesection}{1em}{}
+\titleformat{\subsection}{\color{SchoolColor}\singlespacing\scshape\large\bfseries}{\color{SchoolColor}\thesection}{1em}{}
+
+% define some unit shortcuts
+\usepackage{siunitx}
+\DeclareSIUnit\molar{M}
+\sisetup{per-mode=fraction,fraction-function=\nicefrac,detect-all}
+\newcommand{\mL}[1]{\qty{#1}{\milli\liter}}
+\newcommand{\uL}[1]{\qty{#1}{\micro\liter}}
+\newcommand{\mM}[1]{\qty{#1}{\milli\molar}}
+\newcommand{\uM}[1]{\qty{#1}{\micro\molar}}
+\newcommand{\degC}[1]{\qty{#1}{\degreeCelsius}}
+\newcommand{\code}{\texttt}
+
+% change subheading formatting
+\newcommand{\subheading}[1]{\noindent{\color{SchoolColor}\textbf{\emph{#1}}.}}
+
+% add PDF metadata
+% NOTE: CHANGE THESE PLACEHOLDERS
+\hypersetup{
+	pdftitle={TITLE},
+	pdfsubject={SUBJECT},
+	pdfauthor={AUTHOR}
+}
+
+% change urls to not be monospaced by default
+\urlstyle{same}
 
 \begin{document}
 
 % the front matter
 \input{frontmatter/personalize}
-% \maketitle
-% \copyrightpage
 \frontmatter
+
 \setstretch{\dnormalspacing}
-% \abstractpage
-% \tableofcontents
-% %\authorlist
-% \listoffigures
-% \dedicationpage
-% \acknowledgments
 
 % \doublespacing
 
 % include each chapter...
-\setcounter{chapter}{-1}  % start chapter numbering at 0
+% \setcounter{chapter}{-1}  % start chapter numbering at 0
 \include{chapters/introduction}
 \include{chapters/chapter1}
 \include{chapters/chapter2}
@@ -33,12 +72,5 @@
 
 % the back matter
 \backmatter
-
-% \clearpage
-% \bibliography{references}
-% \addcontentsline{toc}{chapter}{References}
-% \bibliographystyle{apalike2}
-
-% \include{endmatter/colophon}
 
 \end{document}
