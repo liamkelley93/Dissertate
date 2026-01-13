@@ -64,7 +64,6 @@
 % Text layout.
 \RequirePackage[width=5.75in, letterpaper]{geometry}
 \usepackage{ragged2e}
-\RaggedRight
 \RequirePackage{graphicx}
 \usepackage{fixltx2e}
 \parindent 12pt
@@ -75,27 +74,29 @@
 % Fonts.
 \RequirePackage{color}
 \RequirePackage{xcolor}
-\usepackage{hyperref}
+%\usepackage{hyperref}
 \RequirePackage{url}
 \RequirePackage{amssymb}
 \RequirePackage{mathspec}
-\setmathsfont(Digits,Latin,Greek)[Numbers={Proportional}]{EB Garamond}
-\setmathrm{EB Garamond}
+\setmathsfont(Digits,Latin,Greek)[Numbers={Proportional}]{Adobe Caslon Pro}
+\setmathrm{Adobe Caslon Pro}
 \AtBeginEnvironment{tabular}{\addfontfeature{RawFeature=+tnum}}
 \widowpenalty=300
 \clubpenalty=300
-\setromanfont[Numbers=OldStyle, Ligatures={Common, TeX}, Scale=1.0]{EB Garamond}
-\newfontfamily{\smallcaps}[RawFeature={+c2sc,+scmp}]{EB Garamond}
-\setsansfont[Scale=MatchLowercase, BoldFont={Lato Bold}]{Lato Regular}
+\setromanfont[Numbers=Lining, Ligatures={Common, TeX}, Scale=1.0]{Adobe Caslon Pro}
+%\setsansfont[Scale=MatchLowercase, BoldFont={Lato Bold}]{Lato Regular}
+\setsansfont[Scale=MatchUppercase, BoldFont={Avenir Next  Demi Bold}, BoldItalicFont={Avenir Next Demi Bold Italic}]{Avenir Next}
+%\setsansfont[Scale=MatchUppercase]{Myriad Pro}
+%\setsansfont[Scale=MatchUppercase]{Helvetica Neue}
 \setmonofont[Scale=MatchLowercase]{Source Code Pro}
 \RequirePackage[labelfont={bf,sf,footnotesize,singlespacing},
                 textfont={sf,footnotesize,singlespacing},
-                justification={justified,RaggedRight},
+                justification=RaggedRight,
                 singlelinecheck=false,
                 margin=0pt,
                 figurewithin=chapter,
-                tablewithin=chapter]{caption}
-\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+                tablewithin=chapter,
+                hypcap=true]{caption}
 \RequirePackage{microtype}
 
 
@@ -112,18 +113,18 @@
 \usepackage[titletoc]{appendix}
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
 \renewcommand{\cftchapfont}{\normalsize \scshape}
-\renewcommand\listfigurename{Listing of figures}
-\renewcommand\listtablename{Listing of tables}
+\renewcommand\listfigurename{Table of Figures}
+\renewcommand\listtablename{Listing of Tables}
 
 % Endmatter
 \renewcommand{\setthesection}{\arabic{chapter}.A\arabic{section}}
 
 % References.
 \renewcommand\bibname{References}
-\RequirePackage[super,comma,numbers]{natbib}
-\renewcommand{\bibnumfmt}[1]{[#1]}
-\RequirePackage[palatino]{quotchap}
-\renewcommand*{\chapterheadstartvskip}{\vspace*{-0.5\baselineskip}}
+\RequirePackage[super,comma,numbers,sectionbib,sort&compress]{natbib}
+\renewcommand{\bibnumfmt}[1]{#1.}
+\RequirePackage[helvetica]{quotchap}
+\renewcommand*{\chapterheadstartvskip}{\vspace*{-2\baselineskip}}
 \renewcommand*{\chapterheadendvskip}{\vspace{1.3\baselineskip}}
 
 % An environment for paragraph-style section.
@@ -136,9 +137,7 @@
 \newlength\mybibindent
 \setlength\mybibindent{0pt}
 \renewenvironment{thebibliography}[1]
-    {\chapter*{\bibname}%
-     \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
-     \list{\@biblabel{\@arabic\c@enumiv}}
+    {\list{\@biblabel{\@arabic\c@enumiv}}
           {\settowidth\labelwidth{\@biblabel{999}}
            \leftmargin\labelwidth
             \advance\leftmargin\dimexpr\labelsep+\mybibindent\relax\itemindent-\mybibindent
@@ -179,3 +178,193 @@
 \def\pdTwoName#1{\gdef\@pdTwoName{#1}}
 \def\pdTwoSchool#1{\gdef\@pdTwoSchool{#1}}
 \def\pdTwoYear#1{\gdef\@pdTwoYear{#1}}
+% School name and location
+\university{Harvard University}
+\universitycity{Cambridge}
+\universitystate{Massachusetts}
+
+% School color found from university's graphic identity site:
+% http://isites.harvard.edu/icb/icb.do?keyword=k75408&pageid=icb.page392732
+\definecolor{SchoolColor}{rgb}{0.6471, 0.1098, 0.1882} % Crimson
+\definecolor{chaptergrey}{rgb}{0.6471, 0.1098, 0.1882} % for chapter numbers
+
+%\hypersetup{
+%    colorlinks,
+%    citecolor=SchoolColor,
+%    filecolor=black,
+%    linkcolor=black,
+%    urlcolor=SchoolColor,
+%}
+
+% Formatting guidelines found in:
+% http://www.gsas.harvard.edu/publications/form_of_the_phd_dissertation.php
+\renewcommand{\frontmatter}{
+	\input{frontmatter/personalize}
+	\maketitle
+	\copyrightpage
+	\abstractpage
+    \contentspage
+	\figurespage % optional
+	\dedicationpage
+	\acknowledgments
+}
+
+\renewcommand{\maketitle}{
+    \addcontentsline{toc}{chapter}{Title page}
+    \pagenumbering{roman}
+    \setcounter{page}{1}
+	\thispagestyle{empty}
+	\vspace*{\fill}
+	\vspace{100pt}
+	\begin{center}
+	\Huge \textcolor{SchoolColor}{\thetitle} \normalsize \\
+	\vspace{100pt}
+	\textsc{a dissertation presented \\ by\\
+	\theauthor\\ to\\ the Division of Medical Sciences\\
+	\vspace{12pt}
+	in partial fulfillment of the requirements\\
+	for the degree of\\ \@degree\\
+	in the subject of\\ \@field\\
+	\vspace{12pt}
+	\@university\\ \@universitycity, \@universitystate\\
+	\@degreemonth\ \@degreeyear}
+	\end{center} \vspace*{\fill}
+}
+
+\newcommand{\copyrightpage}{
+	\newpage
+	\phantomsection
+    \addcontentsline{toc}{chapter}{Copyright page}
+	\thispagestyle{empty}
+	\vspace*{\fill}
+	\scshape \noindent \small \copyright \small \@degreeyear \hspace{3pt}-- \theauthor \\
+	\noindent all rights reserved.
+	\vspace*{\fill}
+	\newpage
+	\rm
+}
+
+\newcommand{\abstractpage}{
+	\newpage
+	\phantomsection
+	\addcontentsline{toc}{chapter}{Abstract}
+	\pagenumbering{roman}
+	\setcounter{page}{3}
+	\pagestyle{fancy}
+	\lhead{Dissertation advisor: \@advisor} \rhead{\@author}
+	\renewcommand{\headrulewidth}{0.0pt}
+	\vspace*{35pt}
+	\begin{center}
+    	\Large \textcolor{SchoolColor}{\@title} \normalsize \\
+    	\vspace*{20pt}
+    	\scshape Abstract \\ \rm
+	\end{center}
+    \begin{spacing}{\dnormalspacing}
+    	\input{frontmatter/abstract}
+    \end{spacing}
+	\vspace*{\fill}
+	\newpage \lhead{} \rhead{}
+	\cfoot{\thepage}
+}
+
+\newcommand{\contentspage}{
+	\phantomsection
+	\addcontentsline{toc}{chapter}{Table of Contents}
+    \tableofcontents
+}
+
+\newcommand{\figurespage}{
+	\clearpage
+	\phantomsection
+	\addcontentsline{toc}{chapter}{Table of Figures}
+	\listoffigures
+}
+
+\newcommand{\dedicationpage}{
+    \cleardoublepage
+    \phantomsection
+    \pdfbookmark{Dedication}{Dedication}
+	\newpage \thispagestyle{fancy} \vspace*{\fill}
+	\scshape \noindent \input{frontmatter/dedication}
+	\vspace*{\fill} \newpage \rm
+    \cleardoublepage
+}
+
+\newcommand{\acknowledgments}{
+	\chapter*{Acknowledgments}
+	\addcontentsline{toc}{chapter}{Acknowledgements}
+	\noindent
+    \begin{spacing}{\dnormalspacing}
+    	\input{frontmatter/acknowledgements}
+    \end{spacing}
+	\vspace*{\fill} \newpage
+	\setcounter{page}{1}
+	\pagenumbering{arabic}
+}
+
+
+\renewcommand{\backmatter}{
+    \begin{appendices}
+        \include{chapters/appendix}
+    \end{appendices}
+    \input{endmatter/personalize}
+    \input{endmatter/colophon}
+}
+
+% force chapter titles to be displayed in single spacing
+\renewcommand\chapter{%
+  \if@openright\cleardoublepage\else\clearpage\fi
+  \thispagestyle{plain}%
+  \global\@topnum\z@
+  \@printcites
+  \@afterindentfalse
+  \secdef\@chapter\@schapter}
+\renewcommand{\@makechapterhead}[1]{\chapterheadstartvskip%
+  {\size@chapter{\sectfont\raggedleft
+      {\chapnumfont
+        \ifnum \c@secnumdepth >\m@ne%
+        \if@mainmatter\thechapter%
+		\vspace{1cm}
+        \fi\fi
+        \par\nobreak}%
+      {\raggedleft\advance\leftmargin10em\interlinepenalty\@M \begin{spacing}{1}#1\end{spacing} \par}}
+    \nobreak\chapterheadendvskip}}
+\renewcommand{\@makeschapterhead}[1]{%
+  {\let\c@secnumdepth\m@ne\@makechapterhead{#1}}}
+  
+% include chapter titles in list of figures
+% taken from https://tex.stackexchange.com/questions/52746/include-chapters-in-list-of-figures-with-titletoc/52747#52747
+\usepackage{etoolbox}
+
+\makeatletter
+% initial definitions of the chapter info (name and number)
+\def\thischaptertitle{}\def\thischapternumber{}
+\newtoggle{noFigs}
+
+\apptocmd{\@chapter}%
+  {\gdef\thischaptertitle{#1}\gdef\thischapternumber{\thechapter}%
+    \global\toggletrue{noFigs}}{}{}
+
+% the figure environment does the job: the first time it is used after a \chapter command, 
+% it writes the information of the chapter to the LoF
+\AtBeginDocument{%
+  \AtBeginEnvironment{figure}{%
+    \iftoggle{noFigs}{
+      \addtocontents{lof}{\protect\contentsline {chapter}%
+        {\protect\numberline {\thischapternumber} {\thischaptertitle}}{}{} }
+      \global\togglefalse{noFigs}
+    }{}
+  }%
+}
+
+\makeatother
+
+% hyperref must be invoked *after* the above code
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks,
+    citecolor=SchoolColor,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=SchoolColor,
+}
