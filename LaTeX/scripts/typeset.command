@@ -8,9 +8,9 @@ find . -type f -name '*.blg' -delete
 find . -type f -name '*.out' -delete
 xelatex dissertation
 bibtex chapters/introduction
-bibtex chapters/mito
-bibtex chapters/aging
-bibtex chapters/TNBC
+bibtex chapters/chapter1
+bibtex chapters/chapter2
+bibtex chapters/chapter3
 bibtex chapters/conclusion
 xelatex dissertation
 xelatex dissertation
